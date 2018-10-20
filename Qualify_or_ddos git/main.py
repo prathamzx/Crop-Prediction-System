@@ -8,12 +8,12 @@ mycol = mydb["users"]
 app=Flask(__name__)
 
 app.secret_key = 'dljsaklqk24e21cjn!Ew@@dsa5'
-
+#randomly generated
 @app.route('/', methods=['GET', 'POST'])
 def home():
     if not session.get('username')==True:
         return redirect(url_for('login'))
-    
+
     error = None
     return render_template('home.html', error=error)
 
