@@ -13,7 +13,7 @@ app.secret_key = 'dljsaklqk24e21cjn!Ew@@dsa5'
 def home():
     if not session.get('username')==True:
         return redirect(url_for('login'))
-    #return 'You are not signed in!'
+    
     error = None
     return render_template('home.html', error=error)
 
