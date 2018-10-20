@@ -7,12 +7,19 @@ mydb = myclient["mydatabase"]
 mycol = mydb["users"]
 app=Flask(__name__)
 
-@app.route('/')
+app.secret_key = 'dljsaklqk24e21cjn!Ew@@dsa5'
+
+@app.route('/', methods=['GET', 'POST'])
 def home():
-    return "Welcome"
+    if not session.get('username')==True:
+        return redirect(url_for('login'))
+    #return 'You are not signed in!'
+    error = None
+    return render_template('home.html', error=error)
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
+
     row=[]
     error = None
     if request.method == 'POST':
@@ -22,9 +29,9 @@ def login():
         if not row:
             error = 'Invalid Credentials. Please try again.'
         else:
-
+            session['username'] = True
             return redirect(url_for('home'))
-    return render_template('login.js', error=error)
+    return render_template('login.html', error=error)
 
 
 @app.route('/register', methods=['GET', 'POST'])
@@ -44,7 +51,13 @@ def register():
             mycol.insert_one({'name':request.form['name'],'username':request.form['username'],'email':request.form['email'],'dob':request.form['dob'],'password':request.form['password']})
             return redirect(url_for('login'))
 
-    return render_template('register.js', error=error)
+    return render_template('register.html', error=error)
+
+@app.route('/signout', methods=['GET', 'POST'])
+def signout():
+    session.pop('username')
+    return redirect(url_for('login'))
+
 
 if __name__=="__main__":
     app.run(debug=True)
