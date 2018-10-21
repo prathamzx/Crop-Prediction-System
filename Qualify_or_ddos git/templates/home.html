@@ -76,9 +76,9 @@
       </div>
       <div style="font-size:30; color:#ffff8d;">
 {% if session.predict != "" %}
-<h4>Production kg per hectare</h4>
+<h4 style="color:#ccf4e7;">Production kg per hectare</h4>
 {{session.predict}}
-<h4>Crop</h4>
+<h4 style="color:#ccf4e7;">Crop</h4>
 {% for i in session.state%}
 {{i}}<br>
 {%endfor%}
