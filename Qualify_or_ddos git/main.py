@@ -1,6 +1,8 @@
 from flask import Flask, render_template, redirect, url_for, request,session
 import pymongo
-
+from train import *
+import json
+file=json.load(open('crop.json'))
 myclient = pymongo.MongoClient("mongodb://localhost:27017/")
 
 mydb = myclient["mydatabase"]
@@ -16,6 +18,29 @@ def home():
 
     error = None
     return render_template('home.html', error=error)
+@app.route('/predict', methods=['GET', 'POST'])
+def predict():
+    session['predict']=""
+    session['state']=[]
+
+    if not session.get('username')==True:
+        return redirect(url_for('login'))
+    x=dataset(request.form['area'])
+    for y in x:
+        session['predict']=y
+    s=request.form['stt']
+    t=file[s]
+    i=0
+    for u in t:
+        i=i+1
+        session['state'].append(u)
+        if i==5:
+            break
+
+    print(session['state'])
+    error = None
+    return render_template('home.html', error=error)
+
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
@@ -30,6 +55,7 @@ def login():
             error = 'Invalid Credentials. Please try again.'
         else:
             session['username'] = True
+            session['user'] = request.form['username']
             return redirect(url_for('home'))
     return render_template('login.html', error=error)
 
@@ -56,6 +82,7 @@ def register():
 @app.route('/signout', methods=['GET', 'POST'])
 def signout():
     session.pop('username')
+    session['predict']=""
     return redirect(url_for('login'))
 
 
