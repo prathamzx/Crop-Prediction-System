@@ -11,3 +11,10 @@ directory datafiles contain datasets by which the model has been trained and use
 * mongod --dbpath "Qualify_or_ddos\mongodb_data"(in other cmd prompt)
 * open chrome
 * URL - localhost:5000/register
+
+# Technologies Used
+* MongoDB
+* Flask
+* HTML
+* CSS
+* JavaScript
