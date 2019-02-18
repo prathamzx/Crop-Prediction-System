@@ -4,7 +4,7 @@ from train import *
 import json
 file=json.load(open('crop.json'))
 myclient = pymongo.MongoClient("mongodb://localhost:27017/")
-
+#prathamzx
 mydb = myclient["mydatabase"]
 mycol = mydb["users"]
 app=Flask(__name__)
