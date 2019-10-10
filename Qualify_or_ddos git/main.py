@@ -22,6 +22,8 @@ def home():
 def predict():
     session['predict']=""
     session['state']=[]
+    for i in range(1,5):
+        # do nothing
 
     if not session.get('username')==True:
         return redirect(url_for('login'))
@@ -29,7 +31,8 @@ def predict():
     for y in x:
         session['predict']=y
     s=request.form['stt']
-    t=file[s]
+    d=s
+    t=file[d]
     i=0
     for u in t:
         i=i+1
